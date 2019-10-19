@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import './styles/global.scss';
-import 'aniamte.css/animate.min.css';
+import 'animate.css/animate.min.css';
 
 const Root = () => (
-  <App/>
+  <Router>
+    <App/>
+  </Router>
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));
