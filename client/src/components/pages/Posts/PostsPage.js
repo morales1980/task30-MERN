@@ -1,9 +1,14 @@
 import React from 'react';
 
-const PostsPage = (props) => (
+import PageTitle from '../../common/PageTitle/PageTitle';
+import PostsCounter from '../../features/PostsCounter/PostsCounter';
+import Posts from '../../features/Posts/PostsContainer';
+
+const PostsPage = () => (
   <div>
-    <h1>Posts</h1>
-    {props.children}
+    <PageTitle>Posts List</PageTitle>
+    <PostsCounter/>
+    <Posts/>
   </div>
 );
 
