@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {API_URL} from '../config';
 
 // SELECTORS
 export const getPosts = ({posts}) => posts;
@@ -16,14 +17,13 @@ const initialState = [];
 
 // THUNKS
 export const loadPostsRequest = () => {
-  return dispatch => {
-    axios.get('http://localhost:8000/api/posts')
-    .then(response => {
+  return async dispatch => {
+    try {
+      let response = await axios.get(`${API_URL}/posts`);
       dispatch(loadPosts(response.data));
-    })
-    .catch(error => {
+    } catch(error) {
       console.log('Response error: ' + error.message);
-    });
+    }
   };
 };
 
