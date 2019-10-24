@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // SELECTORS
 export const getPosts = ({posts}) => posts;
 
@@ -15,14 +17,15 @@ const initialState = [];
 // THUNKS
 export const loadPostsRequest = () => {
   return dispatch => {
-    console.log('Request started...');
-    setTimeout(() => {
-      const array = [{id: 'asd123', title: 'Test', content: 'Lorem ipsum'}];
-      dispatch(loadPosts(array));
-      console.log('Request finished after 2sec...');
-    }, 2000);
-  }
-}
+    axios.get('http://localhost:8000/api/posts')
+    .then(response => {
+      dispatch(loadPosts(response.data));
+    })
+    .catch(error => {
+      console.log('Response error: ' + error.message);
+    });
+  };
+};
 
 // REDUCER
 export default function reducer(statePart = initialState, action = {}) {

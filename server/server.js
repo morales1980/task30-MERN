@@ -10,7 +10,7 @@ app.use(express.json());
 app.get('/api/posts', (req, res) => {
   const data = [
     {id: '123asd', title: 'lorem impsum', content: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'},
-    {id: '123asd', title: 'lorem impsum', content: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}
+    {id: '456qwe', title: 'lorem impsum', content: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'}
   ]
   res.json(data);
 });
