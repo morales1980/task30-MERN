@@ -1,11 +1,13 @@
 import React from 'react';
 import NavBar from '../../features/NavBar/NavBar';
+import PageContainer from '../PageContainer/PageContainer';
 
-// const MainLayout = ({children}) => (
-const MainLayout = (props) => (
+const MainLayout = ({children}) => (
   <div>
-    <NavBar/>
-    {props.children}
+    <PageContainer>
+      <NavBar/>
+      {children}
+    </PageContainer>
   </div>
 );
 
