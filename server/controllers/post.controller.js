@@ -7,3 +7,11 @@ exports.getPosts = async (request, response) => {
     response.status(500).json(error);
   }
 };
+
+exports.getPost = async (request, response) => {
+  try {
+    response.status(200).json(await Posts.find(request.params));
+  } catch(error) {
+    response.status().json(error.message);
+  }
+};

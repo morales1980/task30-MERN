@@ -37,8 +37,3 @@ Posts.propTypes = {
 };
 
 export default Posts;
-
-// <div>
-//   {request.pending && <Spinner/>}
-//   <PostsList posts={posts}/>
-// </div>
