@@ -1,16 +1,30 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import Logo from '../../common/Logo/Logo';
+import MainMenu from '../../layouts/MainMenu/MainMenu';
+
 import './NavBar.scss';
 
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      links: [
+        {path: '/', title: 'Home'},
+        {path: '/posts/new', title: 'Add post'},
+        {path: '/posts', title: 'Posts'},
+        {path: '/contact', title: 'Contact'}
+      ]
+    };
+  }
+
   render() {
+    const {links} = this.state;
+
     return (
-      <div className="navigation">
-        <Link to='/'>Home</Link>
-        <Link to='/posts/new'>Add post</Link>
-        <Link to='/posts'>Posts</Link>
-        <Link to='/contact'>Contact</Link>
-      </div>
+      <nav className="navbar">
+        <Logo/>
+        <MainMenu links={links}/>
+      </nav>
     );
   }
 }

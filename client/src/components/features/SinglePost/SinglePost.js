@@ -17,7 +17,7 @@ class SinglePost extends React.Component {
     return (
         <div>
           {(request.pending || request.success === null)  &&  <Spinner/>}
-          {!request.pending && request.success && post    &&  <FullPost title={post.title} content={post.content}/>}
+          {!request.pending && request.success && post    &&  <FullPost author = {post.author} title={post.title} content={post.content}/>}
           {!request.pending && request.error !== null     &&  <Alert variant="error">{request.error}</Alert>}
           {!request.pending && request.success && !post   &&  <Alert variant="info">There is no such post</Alert>}
         </div>
