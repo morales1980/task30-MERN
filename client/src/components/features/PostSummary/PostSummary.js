@@ -8,16 +8,28 @@ import SmallTitle from '../../common/SmallTitle/SmallTitle';
 import HtmlBox from '../../common/HtmlBox/HtmlBox';
 import cutText from '../../../utils/CutText/CutText';
 
-const PostSummary = ({id, author, title, content}) => (
-  <article className="post-summary">
-    <SmallTitle>{title}</SmallTitle>
-    <p>author: {author}</p>
-    <HtmlBox>{cutText(content, 250)}</HtmlBox>
-    <Button variant="primary">
-      <Link to={`/posts/${id}`}>Read more</Link>
-    </Button>
-  </article>
-);
+class PostSummary extends React.Component {
+  componentDidMount() {
+
+  }
+
+  render() {
+    const {id, author, title, content} = this.props;
+    return (
+      <article className="post-summary">
+        <SmallTitle>{title}</SmallTitle>
+        <p>author: {author}</p>
+        <HtmlBox>{cutText(content, 250)}</HtmlBox>
+        <Button variant="primary">
+          <Link to={`/posts/${id}`}>Read more</Link>
+        </Button>
+        <Button variant="info">
+          <Link to='/posts/new'>Edit</Link>
+        </Button>
+      </article>
+    );
+  }
+};
 
 PostSummary.propTypes = {
   id: PropTypes.string.isRequired,

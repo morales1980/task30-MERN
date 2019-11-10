@@ -20,6 +20,7 @@ export const START_REQUEST = createActionName('START_REQUEST');
 export const END_REQUEST = createActionName('END_REQUEST');
 export const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 export const LOAD_SINGLEPOST = createActionName('LOAD_SINGLEPOST');
+export const RESET_REQUEST = createActionName('RESET_REQUEST');
 
 //actions
 export const loadPosts = (payload) => ({payload, type: LOAD_POSTS});
@@ -27,6 +28,7 @@ export const startRequest = () => ({type: START_REQUEST});
 export const endRequest = () => ({type: END_REQUEST});
 export const errorRequest = (error) => ({error, type: ERROR_REQUEST});
 export const loadSinglePost = (payload) => ({payload, type: LOAD_SINGLEPOST});
+export const resetRequest = () => ({type: RESET_REQUEST});
 
 // INITIAL STATE
 const initialState = {
@@ -36,7 +38,8 @@ const initialState = {
     pending: false,
     error: null,
     success: null
-  }
+  },
+  formMode: {}
 };
 
 // THUNKS
@@ -70,6 +73,20 @@ export const loadSinglePostRequest = (id) => {
   };
 };
 
+//add new post endRequest
+export const addPostRequest = (post) => {
+  return async dispatch => {
+    dispatch(startRequest());
+    try {
+      await axios.post(`${API_URL}/posts`, post);
+      await new Promise((resolve, reject) => setTimeout(resolve, 2000));
+      dispatch(endRequest());
+    } catch (error) {
+      dispatch(errorRequest(error.message));
+    }
+  };
+};
+
 // REDUCER
 export default function reducer(statePart = initialState, action = {}) {
   switch(action.type) {
@@ -83,6 +100,8 @@ export default function reducer(statePart = initialState, action = {}) {
       return {...statePart, request: {pending: false, error: action.error, success: false}};
     case LOAD_SINGLEPOST:
       return {...statePart, singlePost: action.payload};
+    case RESET_REQUEST:
+      return {...statePart, request: {pending: false, error: null, success: null}};
     default:
     return statePart;
   }

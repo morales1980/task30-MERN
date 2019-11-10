@@ -7,7 +7,8 @@ import Alert from '../../common/Alert/Alert';
 
 class SinglePost extends React.Component {
   componentDidMount() {
-    const {loadSinglePost, id} = this.props;
+    const {loadSinglePost, id, resetRequest} = this.props;
+    resetRequest();
     loadSinglePost(id);
   }
 
@@ -26,11 +27,11 @@ class SinglePost extends React.Component {
 };
 
 SinglePost.propTypes = {
-  post: PropTypes.shape({
+  post: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired
-  }),
+  })),
   loadSinglePost: PropTypes.func.isRequired
 };
 
