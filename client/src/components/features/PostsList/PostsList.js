@@ -1,7 +1,7 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
 
-import PostSummary from '../PostSummary/PostSummary';
+import PostSummary from '../PostSummary/PostSummaryContainer';
 
 const PostsList = ({posts}) => (
   <div>

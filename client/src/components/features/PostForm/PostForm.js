@@ -25,8 +25,29 @@ class PostForm extends React.Component {
   }
 
   componentDidMount() {
-    const {resetRequest, formMode} = this.props;
+    const {resetRequest, formMode, loadSinglePost} = this.props;
     resetRequest();
+    if(formMode.edit) {
+      loadSinglePost(`/posts/${formMode.id}`);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {formMode, editedPost} = this.props;
+    if(formMode.edit && editedPost !== prevProps.editedPost) {
+      this.setState({
+        post: {
+          title: editedPost.title,
+          author: editedPost.author,
+          content: editedPost.content
+        }
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    const {changeFormMode} = this.props;
+    changeFormMode(false, '');
   }
 
   handleChange = (e) => {
@@ -52,16 +73,25 @@ class PostForm extends React.Component {
     addPost(post);
   }
 
+  updatePost = (e) => {
+    const {updatePost, formMode} = this.props;
+    const {post} = this.state;
+
+    e.preventDefault();
+    updatePost(post, formMode.id);
+  }
+
   render() {
     const {post} = this.state;
-    const {handleChange, handleEditor, addPost} = this;
-    const {request} = this.props;
+    const {handleChange, handleEditor, addPost, updatePost} = this;
+    const {request, formMode} = this.props;
 
     if(request.error) return <Alert varian='error'>{request.error}</Alert>
-    else if(request.success) return <Alert variant='success'>Post has been added!</Alert>
+    else if(request.success && !formMode.edit) return <Alert variant='success'>Post has been added!</Alert>
+    else if(request.success && formMode.edit && formMode.id==='') return <Alert variant='success'>Post has been modified!</Alert>
     else if(request.pending) return <Spinner/>
-    else return (
-      <form onSubmit={addPost}>
+    else if(formMode.edit) return (
+      <form onSubmit={updatePost}>
 
         <TextField
           label='Title'
@@ -86,6 +116,36 @@ class PostForm extends React.Component {
           options={{placeholder: false, toolbar: {align: 'center', buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
         />
 
+        <Button variant='primary'>Update post</Button>
+
+      </form>
+    )
+    else return (
+      <form onSubmit={addPost}>
+
+        <TextField
+          label='Title'
+          value={post.title}
+          onChange={handleChange}
+          name='title'
+        />
+
+        <TextField
+          label='Author'
+          value={post.author}
+          onChange={handleChange}
+          name='author'
+        />
+
+      <SectionTitle>Write post content below</SectionTitle>
+
+        <Editor
+          className='content-editor'
+          text={post.content}
+          onChange={handleEditor}
+          options={{placeholder: false, toolbar: {align: 'center', buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
+        />
+
       <Button variant='primary'>Add post</Button>
 
       </form>
@@ -99,3 +159,32 @@ PostForm.propTypes = {
 };
 
 export default PostForm;
+
+// <form onSubmit={updatePost}>
+//
+//   <TextField
+//     label='Title'
+//     value={post.title}
+//     onChange={handleChange}
+//     name='title'
+//   />
+//
+//   <TextField
+//     label='Author'
+//     value={post.author}
+//     onChange={handleChange}
+//     name='author'
+//   />
+//
+//   <SectionTitle>Edit post content</SectionTitle>
+//
+//   <Editor
+//     className='content-editor'
+//     text={post.content}
+//     onChange={handleEditor}
+//     options={{placeholder: false, toolbar: {align: 'center', buttons: ['bold', 'italic', 'underline', 'anchor', 'h2', 'h3', 'quote']}}}
+//   />
+//
+// <Button variant='primary'>Update post</Button>
+//
+// </form>

@@ -1,15 +1,12 @@
 import {connect} from 'react-redux';
-import {loadSinglePostRequest} from '../../../redux/postsRedux';
+import {loadSinglePostRequest, changeFormMode} from '../../../redux/postsRedux';
 
 import PostSummary from './PostSummary';
 
-const mapStateToProps = (state) => {
 
-};
-
-const mapDispatchToProps = (dispatch) => {
-  changeFormMode: () => dispatch(changeFormModeRequest()),
+const mapDispatchToProps = (dispatch) => ({
+  changeFormMode: (mode, id) => dispatch(changeFormMode(mode, id)),
   loadSinglePost: (id) => dispatch(loadSinglePostRequest(id))
-};
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostSummary);
+export default connect(null, mapDispatchToProps)(PostSummary);

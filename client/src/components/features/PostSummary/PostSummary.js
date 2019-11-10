@@ -9,12 +9,16 @@ import HtmlBox from '../../common/HtmlBox/HtmlBox';
 import cutText from '../../../utils/CutText/CutText';
 
 class PostSummary extends React.Component {
-  componentDidMount() {
 
+  changeFormMode = () => {
+    const {changeFormMode, id} = this.props;
+    changeFormMode(true, id);
   }
 
   render() {
     const {id, author, title, content} = this.props;
+    const {changeFormMode} = this;
+
     return (
       <article className="post-summary">
         <SmallTitle>{title}</SmallTitle>
@@ -23,7 +27,7 @@ class PostSummary extends React.Component {
         <Button variant="primary">
           <Link to={`/posts/${id}`}>Read more</Link>
         </Button>
-        <Button variant="info">
+        <Button variant="info" onClick={changeFormMode}>
           <Link to='/posts/new'>Edit</Link>
         </Button>
       </article>
